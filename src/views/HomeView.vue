@@ -114,6 +114,4 @@
         color: #343a40;
         background: #fff;
     }
-
-
 </style>
