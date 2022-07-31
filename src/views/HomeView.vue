@@ -40,6 +40,9 @@
                     try {
                         const response =  await createMember(this.member);
                         this.clearForm();
+                        setTimeout(() => {
+                            alert('Member successfully created');
+                        }, 500);
                     }catch (err) {
                         let errorMessage = err.response.data.message;
                         console.error(err.response.data);
@@ -143,8 +146,8 @@
         cursor: pointer;
     }
 
-    /*.member-form .btns .save-btn:hover {
+    .member-form .btns .save-btn:hover {
         color: #343a40;
         background: #fff;
-    }*/
+    }
 </style>
