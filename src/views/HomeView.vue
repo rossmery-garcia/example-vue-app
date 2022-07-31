@@ -1,24 +1,24 @@
 <template>
     <form @submit.prevent="saveMember" class="member-form">
         <div class="field">
-            <label for="firstName">First Name</label>
-            <input type="text" v-model="member.firstName">
+            <label for="firstName">First Name *</label>
+            <input type="text" v-model="member.firstName" required>
         </div>
         <div class="field">
-            <label for="lastName">Last Name</label>
-            <input type="text" v-model="member.lastName">
+            <label for="lastName">Last Name *</label>
+            <input type="text" v-model="member.lastName" required>
         </div>
         <div class="field">
-            <label for="address">Address</label>
-            <input type="text" v-model="member.address">
+            <label for="address">Address *</label>
+            <input type="text" v-model="member.address" required>
         </div>
         <div class="field">
-            <label for="ssn">SSN</label>
-            <input type="text" v-model="member.ssn">
+            <label for="ssn">SSN *</label>
+            <input type="text" v-model="member.ssn" required>
         </div>
         <div class="btns">
-            <button class="reset-btn">Reset</button>
-            <button class="save-btn">Save</button>
+            <button class="reset-btn" @click="clearForm" type="button">Reset</button>
+            <button class="save-btn" type="submit">Save</button>
         </div>
     </form>
 </template>
@@ -36,9 +36,38 @@
         },
         methods: {
             async saveMember() {
-                const response =  await createMember(this.member);
-                console.log("response api: ", response);
+                if(this.ValidateInputs()) {
+                    try {
+                        const response =  await createMember(this.member);
+                        this.clearForm();
+                    }catch (err) {
+                        let errorMessage = err.response.data.message;
+                        console.error(err.response.data);
+                        alert(`Failed to add member: ${errorMessage}`);
+                    }
+                }else {
+                    alert('Please complete all the fields:\n- First Name, Last Name, Address: more than one character and no spaces\n- SSN: numbers and dashes (format ###-##-####)');
+                }
             },
+            clearForm() {
+                this.member = {} as Member;
+            },
+            ValidateInputs() {
+                if(!this.member.firstName || !this.member.lastName || !this.member.address || !this.member.ssn) return false;
+
+                if(this.member.firstName.trim().length <= 1 || this.member.lastName.trim().length <= 1 || this.member.address.trim().length <= 1) return false;
+
+                if(!this.validateSsnInput()) return false;
+
+                return true;
+            },
+            validateSsnInput() {
+                const regex = /^\d{3}-\d{2}-\d{4}$/;
+
+                if (regex.test(this.member.ssn) === false) return false;
+
+                return true;
+            }
         }
     })
 </script>
@@ -114,8 +143,8 @@
         cursor: pointer;
     }
 
-    .member-form .btns .save-btn:hover {
+    /*.member-form .btns .save-btn:hover {
         color: #343a40;
         background: #fff;
-    }
+    }*/
 </style>
