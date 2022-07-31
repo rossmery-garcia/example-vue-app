@@ -25,16 +25,20 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue';
+    import { Member } from '../types/Member';
+    import { createMember } from '../services/MemberService';
+
     export default defineComponent({
         data() {
             return {
-                member: {}
+                member: {} as Member
             }
         },
         methods: {
             async saveMember() {
-                console.log("save member: ", this.member);
-            }
+                const response =  await createMember(this.member);
+                console.log("response api: ", response);
+            },
         }
     })
 </script>

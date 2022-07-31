@@ -2,10 +2,10 @@
     <nav>
         <ul class="links-content">
             <li>
-                <a href="/" class="link">Home</a>
+                <router-link to="/" class="link">Home</router-link>
             </li>
             <li>
-                <a href="/members" class="link">Members</a>
+                <router-link to="/members" class="link">Members</router-link>
             </li>
         </ul>
     </nav>
