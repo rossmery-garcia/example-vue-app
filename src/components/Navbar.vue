@@ -24,8 +24,9 @@
         width: 360px;
         height: 60px;
         display: flex;
-        background: #f4f3ee;
+        background: #495057;
         margin: 40px;
+        border-radius: 16px;
     }
 
     .links-content {
@@ -44,10 +45,10 @@
 
     .links-content li a {
         font-size: 24px;
-        font-weight: 600;
+        font-weight: 800;
         color: #eccbd9;
-        color: #f49cbb;
         text-decoration: none;
+        text-transform: uppercase;
         cursor: pointer;
     }
 
